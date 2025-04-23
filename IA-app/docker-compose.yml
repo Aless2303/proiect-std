@@ -1,0 +1,22 @@
+services:
+  ai-backend:
+    build: ./ai-backend
+    volumes:
+      - ./ai-backend/uploads:/app/uploads
+    networks:
+      - app-network
+
+  ai-apache:
+    build: ./ai-apache
+    ports:
+      - "8080:80"
+    depends_on:
+      - ai-backend
+    volumes:
+      - ./ai-frontend/dist:/usr/local/apache2/htdocs
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

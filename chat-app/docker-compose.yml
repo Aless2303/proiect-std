@@ -1,0 +1,27 @@
+services:
+  chat-backend:
+    build: ./chat-backend
+    depends_on:
+      - mongodb
+
+  chat-nginx:
+    build: ./chat-nginx
+    ports:
+      - "88:88" # Expunem portul 88 pentru WebSocket
+    depends_on:
+      - chat-backend
+
+  chat-frontend:
+    build: ./chat-frontend
+    ports:
+      - "90:80" # Expunem portul 90 pentru frontend
+    depends_on:
+      - chat-nginx
+
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
