@@ -1,27 +1,43 @@
+version: "3.8"
 services:
   chat-backend:
     build: ./chat-backend
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongodb:27017/chatdb
     depends_on:
       - mongodb
+    networks:
+      - chat-network
 
   chat-nginx:
     build: ./chat-nginx
     ports:
-      - "88:88" # Expunem portul 88 pentru WebSocket
+      - "88:88"
     depends_on:
       - chat-backend
+    networks:
+      - chat-network
 
   chat-frontend:
     build: ./chat-frontend
     ports:
-      - "90:80" # Expunem portul 90 pentru frontend
+      - "90:80"
     depends_on:
       - chat-nginx
+    networks:
+      - chat-network
 
   mongodb:
     image: mongo:latest
     volumes:
       - mongo-data:/data/db
+    networks:
+      - chat-network
 
 volumes:
   mongo-data:
+
+networks:
+  chat-network:
+    driver: bridge

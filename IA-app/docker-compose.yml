@@ -3,17 +3,29 @@ services:
     build: ./ai-backend
     volumes:
       - ./ai-backend/uploads:/app/uploads
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    expose:
+      - "3000"
+    networks:
+      - app-network
+
+  ai-frontend:
+    build: ./ai-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - ai-backend
     networks:
       - app-network
 
   ai-apache:
     build: ./ai-apache
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
       - ai-backend
-    volumes:
-      - ./ai-frontend/dist:/usr/local/apache2/htdocs
     networks:
       - app-network
 
