@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-apache
+  namespace: mta-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-apache
+  template:
+    metadata:
+      labels:
+        app: ai-apache
+    spec:
+      containers:
+      - name: ai-apache
+        image: localhost:5000/ai-apache:latest
+        ports:
+        - containerPort: 80

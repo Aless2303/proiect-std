@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statamic
+  namespace: mta-project
+spec:
+  replicas: 2  # 2 replici conform cerinței
+  selector:
+    matchLabels:
+      app: statamic
+  template:
+    metadata:
+      labels:
+        app: statamic
+    spec:
+      containers:
+      - name: statamic
+        image: localhost:5000/statamic:latest  # Referință către imaginea din registrul privat
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: statamic-content
+          mountPath: /var/www/html/content
+        - name: statamic-storage
+          mountPath: /var/www/html/storage
+        env:
+        - name: DB_HOST
+          value: mysql
+        - name: DB_DATABASE
+          value: statamic_db
+        - name: DB_USERNAME
+          value: statamic_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        command:
+        - /bin/bash
+        - -c
+        - |
+          php artisan cache:clear &&
+          php artisan statamic:stache:clear &&
+          chown -R www-data:www-data /var/www/html/content &&
+          chmod -R 775 /var/www/html/content &&
+          chown -R www-data:www-data /var/www/html/storage &&
+          chmod -R 775 /var/www/html/storage &&
+          apache2-foreground
+      volumes:
+      - name: statamic-content
+        persistentVolumeClaim:
+          claimName: statamic-content-pvc
+      - name: statamic-storage
+        persistentVolumeClaim:
+          claimName: statamic-storage-pvc

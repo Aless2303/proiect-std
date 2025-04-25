@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-backend
+  namespace: mta-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-backend
+  template:
+    metadata:
+      labels:
+        app: ai-backend
+    spec:
+      containers:
+      - name: ai-backend
+        image: localhost:5000/ai-backend:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: production
+        - name: PORT
+          value: "3000"
+        - name: AZURE_STORAGE_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: azure-secret
+              key: storage-connection-string
+        - name: AZURE_SQL_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: azure-secret
+              key: sql-connection-string
+        - name: AZURE_VISION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: azure-secret
+              key: vision-key
+        - name: AZURE_VISION_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: azure-secret
+              key: vision-endpoint
+        volumeMounts:
+        - name: uploads
+          mountPath: /app/uploads
+      volumes:
+      - name: uploads
+        emptyDir: {}

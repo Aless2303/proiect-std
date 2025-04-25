@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-nginx
+  namespace: mta-project
+spec:
+  replicas: 2  # 2 replici conform cerinței
+  selector:
+    matchLabels:
+      app: chat-nginx
+  template:
+    metadata:
+      labels:
+        app: chat-nginx
+    spec:
+      containers:
+      - name: chat-nginx
+        image: localhost:5000/chat-nginx:latest
+        ports:
+        - containerPort: 88
