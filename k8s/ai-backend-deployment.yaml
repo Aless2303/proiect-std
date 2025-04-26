@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Users\alexm\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert --out k8s/
+    kompose.version: 1.35.0 (9532ceef3)
+  labels:
+    io.kompose.service: ai-backend
+  name: ai-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: ai-backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Users\alexm\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert --out k8s/
+        kompose.version: 1.35.0 (9532ceef3)
+      labels:
+        io.kompose.service: ai-backend
+    spec:
+      containers:
+        - env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "3000"
+          image: ai-backend
+          name: ai-backend
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /app/uploads
+              name: ai-backend-cm0
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: ai-backend-cm0
+          name: ai-backend-cm0
