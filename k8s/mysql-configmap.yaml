@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS statamic_db;
+    GRANT ALL PRIVILEGES ON statamic_db.* TO 'statamic_user'@'%';
+    FLUSH PRIVILEGES;

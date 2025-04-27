@@ -23,7 +23,9 @@ spec:
         io.kompose.service: mysql
     spec:
       containers:
-        - env:
+        - name: mysql
+          image: mysql:8.0
+          env:
             - name: MYSQL_DATABASE
               value: statamic_db
             - name: MYSQL_PASSWORD
@@ -32,13 +34,26 @@ spec:
               value: rootpassword
             - name: MYSQL_USER
               value: statamic_user
-          image: mysql:8.0
-          name: mysql
+          ports:
+            - containerPort: 3306
+              protocol: TCP
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: mysql-data
-      restartPolicy: Always
+            - name: init-db
+              mountPath: /docker-entrypoint-initdb.d
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
       volumes:
         - name: mysql-data
           persistentVolumeClaim:
             claimName: mysql-data
+        - name: init-db
+          configMap:
+            name: mysql-config
+      restartPolicy: Always

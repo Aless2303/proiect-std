@@ -8,7 +8,7 @@ metadata:
     io.kompose.service: statamic
   name: statamic
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       io.kompose.service: statamic
@@ -34,7 +34,7 @@ spec:
                        chown -R www-data:www-data /var/www/html/storage &&
                        chmod -R 775 /var/www/html/storage &&
                        apache2-foreground
-          image: statamic
+          image: localhost:30500/statamic:latest
           name: statamic
           ports:
             - containerPort: 80

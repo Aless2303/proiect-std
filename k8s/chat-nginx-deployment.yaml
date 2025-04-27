@@ -8,7 +8,7 @@ metadata:
     io.kompose.service: chat-nginx
   name: chat-nginx
 spec:
-  replicas: 1
+  replicas: 2  # Modificat conform cerințelor
   selector:
     matchLabels:
       io.kompose.service: chat-nginx
@@ -21,9 +21,17 @@ spec:
         io.kompose.service: chat-nginx
     spec:
       containers:
-        - image: chat-nginx
-          name: chat-nginx
+        - name: chat-nginx
+          image: localhost:30500/chat-nginx:latest
           ports:
             - containerPort: 88
               protocol: TCP
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: nginx.conf
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: chat-nginx-config
       restartPolicy: Always

@@ -12,5 +12,7 @@ spec:
     - name: "88"
       port: 88
       targetPort: 88
+      nodePort: 30088
   selector:
     io.kompose.service: chat-nginx
+  type: NodePort
