@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: chat-backend
-          image: localhost:30500/ai-frontend:latest
+          image: localhost:5000/ai-frontend:latest
           env:
             - name: NODE_ENV
               value: production

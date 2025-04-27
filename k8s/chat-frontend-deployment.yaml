@@ -21,7 +21,7 @@ spec:
         io.kompose.service: chat-frontend
     spec:
       containers:
-        - image: localhost:30500/chat-frontend:latest
+        - image: localhost:5000/chat-frontend:latest
           name: chat-frontend
           ports:
             - containerPort: 80
