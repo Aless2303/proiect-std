@@ -1,0 +1,13 @@
+tree:
+  -
+    id: 33c52727-0209-4519-86f9-5b0a6fe53224
+    title: AI
+    url: 'http://localhost/ai'
+  -
+    id: 254921d8-6b1b-43e7-a2f6-7f8e0e3bf125
+    title: Chat
+    url: 'http://localhost/chat'
+  -
+    id: 588b33d9-9e6c-4e9c-b9c0-849a7f55d644
+    title: Home
+    url: 'http://localhost/'

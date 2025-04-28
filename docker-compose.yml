@@ -10,6 +10,7 @@ services:
       - mysql
     volumes:
       - statamic-content:/var/www/html/content
+      - ./cms-statamic/volum:/var/salut
     networks:
       - app-network
     command: >

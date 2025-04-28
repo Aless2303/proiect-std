@@ -14,14 +14,14 @@ spec:
     spec:
       initContainers:
         - name: copy-content
-          image: localhost:5000/statamic:latest
+          image: aless2303/statamic:latest
           command: ["sh", "-c", "cp -r /var/www/html/content/* /mnt/content/ || true"]
           volumeMounts:
             - name: statamic-content
               mountPath: /mnt/content
       containers:
         - name: statamic
-          image: localhost:5000/statamic:latest
+          image: aless2303/statamic:latest
           ports:
             - containerPort: 80
           volumeMounts:
