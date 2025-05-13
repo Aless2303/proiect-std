@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: chat-nginx
-          image: aless2303/chat-nginx:latest
+          image: localhost:32000/chat-nginx
           ports:
             - containerPort: 88
               protocol: TCP

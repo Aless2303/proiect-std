@@ -21,7 +21,7 @@ spec:
         io.kompose.service: ai-apache
     spec:
       containers:
-        - image: aless2303/ai-apache:latest
+        - image: localhost:32000/ai-apache
           name: ai-apache
           ports:
             - containerPort: 80

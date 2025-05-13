@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongodb-init
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongodb-init
+        image: mongo:4.4
+        command:
+        - bash
+        - "-c"
+        - |
+          echo "Waiting for MongoDB to start..."
+          sleep 15
+          echo "Initializing ReplicaSet..."
+          mongo mongodb:27017 /config-map/init.js
+          echo "ReplicaSet initialization completed."
+        volumeMounts:
+        - name: config-map
+          mountPath: /config-map
+      restartPolicy: OnFailure
+      volumes:
+      - name: config-map
+        configMap:
+          name: mongodb-init

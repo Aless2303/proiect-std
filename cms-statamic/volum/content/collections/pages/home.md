@@ -2,26 +2,42 @@
 id: home
 blueprint: pages
 title: Home
-template: home
+template: default
 author: bf467f3f-0106-456d-ba36-82efddc7b7bf
 updated_by: bf467f3f-0106-456d-ba36-82efddc7b7bf
-updated_at: 1745787259
+updated_at: 1745850523
 ---
 <style>
+  :root {
+    --primary: #f1356d;
+    --secondary: #6c5ce7;
+    --dark: #2d3436;
+    --light: #f5f6fa;
+    --accent: #00cec9;
+  }
+  
   body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     line-height: 1.6;
-    color: #333;
-    max-width: 1200px;
+    color: var(--dark);
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0;
+    background-color: var(--light);
+    min-height: 100vh;
+  }
+  
+  .container {
+    padding: 20px 40px;
   }
   
   .main-nav {
-    background-color: #f1356d; /* Culoarea roz Statamic */
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    padding: 15px 40px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
   
   .main-nav ul {
@@ -29,65 +45,154 @@ updated_at: 1745787259
     list-style: none;
     margin: 0;
     padding: 0;
+    justify-content: center;
   }
   
   .main-nav li {
-    margin-right: 20px;
+    margin: 0 25px;
   }
   
   .main-nav a {
     color: white;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 18px;
-    transition: color 0.3s;
+    transition: all 0.3s;
+    padding: 8px 12px;
+    border-radius: 4px;
   }
   
   .main-nav a:hover {
-    color: #e6e6e6;
+    background-color: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+  }
+  
+  .main-nav li.active a {
+    background-color: rgba(255,255,255,0.3);
   }
   
   h1 {
-    color: #333;
-    border-bottom: 2px solid #f1356d;
-    padding-bottom: 10px;
-    margin-top: 30px;
+    color: var(--dark);
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 12px;
+    margin: 40px 0 30px;
+    font-size: 2.5rem;
+    text-align: center;
   }
   
-  .iframe-wrapper {
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    margin: 20px 0;
+  .hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, rgba(241,53,109,0.1), rgba(108,92,231,0.1));
+    border-radius: 12px;
+    margin: 40px 0;
   }
   
-  .iframe-wrapper iframe {
-    width: 100%;
-    height: 600px; /* Înălțimea iframe-ului - ajustează după necesitate */
-    border: none;
+  .hero h2 {
+    font-size: 2.2rem;
+    color: var(--primary);
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 60px 0;
+  }
+  
+  .feature-card {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+  
+  .feature-card h3 {
+    color: var(--primary);
+    margin-top: 0;
+  }
+  
+  .cta {
+    text-align: center;
+    margin: 50px 0;
+  }
+  
+  .btn {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(241,53,109,0.3);
+  }
+  
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(241,53,109,0.4);
+  }
+  
+  footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 60px;
+  }
+  
+  @media (max-width: 768px) {
+    .main-nav ul {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .main-nav li {
+      margin: 10px 0;
+    }
   }
 </style>
 
 <nav class="main-nav">
   <ul>
-    <li><a href="/">Home</a></li>
+    <li class="active"><a href="/">Home</a></li>
     <li><a href="/chat">Chat</a></li>
     <li><a href="/ai">Aplicație IA</a></li>
   </ul>
 </nav>
 
-# Bun venit pe site-ul meu!
+<div class="container">
+  <div class="hero">
+    <h1>Bun venit pe platforma noastră!</h1>
+    <p>Descoperă soluțiile noastre avansate de chat și inteligență artificială create pentru a-ți simplifica munca.</p>
+  </div>
 
-Alege o opțiune din meniul de mai sus pentru a explora chat-ul sau aplicația IA.
-PERSISTENTA TE ROG
+  <div class="features">
+    <div class="feature-card">
+      <h3>Chat în timp real</h3>
+      <p>Comunică instant cu echipa ta sau cu clienții prin intermediul soluției noastre de chat performante.</p>
+      <h3>Inteligență Artificială</h3>
+      <p>Folosește puterea AI pentru a automatiza procese și a obține insights valoroase din date.</p>
+    </div>
 
----
+  </div>
+
+</div>
 
 
-- [Jump into the Control Panel](/cp) and edit this page or begin setting up your own collections and blueprints.
-- [Head to the docs](https://statamic.dev) and learn how Statamic works.
-- [Watch some Statamic videos](https://youtube.com/statamic) on YouTube.
-- [Join our Discord chat](https://statamic.com/discord) and meet thousands of other Statamic developers.
-- [Start a discussion](https://github.com/statamic/cms/discussions) and get answers to your questions.
-- [Star Statamic on Github](https://github.com/statamic/cms) if you enjoy using it!
+<footer>
+  <p>© 2023 Platforma Mea. Toate drepturile rezervate.</p>
+</footer>

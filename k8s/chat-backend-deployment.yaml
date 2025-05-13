@@ -8,7 +8,7 @@ metadata:
     io.kompose.service: chat-backend
   name: chat-backend
 spec:
-  replicas: 2  
+  replicas: 10  
   selector:
     matchLabels:
       io.kompose.service: chat-backend
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: chat-backend
-          image: aless2303/chat-backend:latest
+          image: localhost:32000/chat-backend
           env:
             - name: NODE_ENV
               value: production

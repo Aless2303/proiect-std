@@ -1,36 +1,42 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
+  name: mongodb
   annotations:
     kompose.cmd: C:\Users\alexm\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert --out k8s/
     kompose.version: 1.35.0 (9532ceef3)
   labels:
     io.kompose.service: mongodb
-  name: mongodb
+    app: mongodb
 spec:
+  serviceName: "mongodb"
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb  # Ajustat pentru a corespunde serviciului
-  strategy:
-    type: Recreate
+      app: mongodb
   template:
     metadata:
       annotations:
         kompose.cmd: C:\Users\alexm\AppData\Local\Microsoft\WinGet\Links\kompose.exe convert --out k8s/
         kompose.version: 1.35.0 (9532ceef3)
       labels:
-        app: mongodb  # Ajustat pentru a corespunde serviciului
-        io.kompose.service: mongodb  # Păstrează eticheta originală
+        app: mongodb
+        io.kompose.service: mongodb
     spec:
       containers:
-        - image: mongo:latest
-          name: mongodb
-          volumeMounts:
-            - mountPath: /data/db
-              name: mongo-data
-      restartPolicy: Always
-      volumes:
+      - name: mongodb
+        image: mongo:4.4
+        command:
+        - mongod
+        - "--bind_ip_all"
+        - "--replSet"
+        - "rs0"
+        ports:
+        - containerPort: 27017
+        volumeMounts:
         - name: mongo-data
-          persistentVolumeClaim:
-            claimName: mongo-data
+          mountPath: /data/db
+      volumes:
+      - name: mongo-data
+        persistentVolumeClaim:
+          claimName: mongo-data

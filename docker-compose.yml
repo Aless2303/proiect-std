@@ -14,13 +14,14 @@ services:
     networks:
       - app-network
     command: >
-      bash -c "php artisan cache:clear &&
-               php artisan statamic:stache:clear &&
-               chown -R www-data:www-data /var/www/html/content &&
-               chmod -R 775 /var/www/html/content &&
-               chown -R www-data:www-data /var/www/html/storage &&
-               chmod -R 775 /var/www/html/storage &&
-               apache2-foreground"
+      bash -c "sleep 10 &&
+              php artisan cache:clear &&
+              php artisan statamic:stache:clear &&
+              chown -R www-data:www-data /var/www/html/content &&
+              chmod -R 775 /var/www/html/content &&
+              chown -R www-data:www-data /var/www/html/storage &&
+              chmod -R 775 /var/www/html/storage &&
+              apache2-foreground"
 
   # MySQL pentru Statamic
   mysql:

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ai-backend
-        image: aless2303/ai-backend:latest
+        image: localhost:32000/ai-backend
         env:
         - name: NODE_ENV
           value: production
